@@ -1,0 +1,30 @@
+local proxy = module("vrp", "lib/Proxy")
+vRP = proxy.getInterface("vRP")
+
+RegisterServerEvent("checkNOS")
+AddEventHandler("checkNOS", function()
+    local userID = vRP.getUserId({source})
+    local itemAmount = vRP.getInventoryItemAmount({userID, "nitro"})
+    TriggerClientEvent("returnNOS", source, itemAmount)
+end)
+
+RegisterServerEvent('takeNOSFromInventory')
+AddEventHandler('takeNOSFromInventory', function()
+    local userID = vRP.getUserId({source})
+    vRP.tryGetInventoryItem({userID, "nitro", 1, true})
+end)
+
+RegisterServerEvent("eff_sound_start")
+AddEventHandler("eff_sound_start", function(entity)
+	TriggerClientEvent("c_eff_sound_start", -1, entity)
+end)
+
+RegisterServerEvent("eff_sound_stop")
+AddEventHandler("eff_sound_stop", function(entity)
+	TriggerClientEvent("c_eff_sound_stop", -1, entity)
+end)
+
+RegisterServerEvent("flameEffect")
+AddEventHandler("flameEffect", function(entity)
+	TriggerClientEvent("cFlameEffect", -1, entity)
+end)
